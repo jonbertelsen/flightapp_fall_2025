@@ -7,6 +7,7 @@ import dk.cphbusiness.utils.Utils;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -18,14 +19,27 @@ import java.util.*;
  */
 public class FlightReader {
 
+    private static List<FlightDTO> flightList;
+    private static List<FlightInfoDTO> flightInfoList;
+    private static FlightServices flightServices = new FlightServices();
+
     public static void main(String[] args) {
         try {
-            List<FlightDTO> flightList = getFlightsFromFile("flights.json");
-            List<FlightInfoDTO> flightInfoDTOList = getFlightInfoDetails(flightList);
-            flightInfoDTOList.forEach(System.out::println);
+            flightList = getFlightsFromFile("flights.json");
+            flightInfoList = getFlightInfoDetails(flightList);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        exercise_one();
+    }
+
+    private static void exercise_one() {
+        System.out.println("Exercise 1 started");
+        String airline = "Lufthansa";
+        double average = flightServices.getAverageFligthTime(flightInfoList, airline);
+        System.out.println(String.format("Average flight time for %s: %.2f", airline, average ));
+        System.out.println("Nice formatted: " + Utils.convertDoubleInMinutesToString(average));
     }
 
     public static List<FlightDTO> getFlightsFromFile(String filename) throws IOException {

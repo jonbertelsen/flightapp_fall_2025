@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dk.cphbusiness.flightdemo.FlightReader;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.Properties;
 
 /**
@@ -12,6 +13,17 @@ import java.util.Properties;
  * Author: Thomas Hartmann
  */
 public class Utils {
+
+    public static String convertDoubleInMinutesToString(double timeInMinutes) {
+        long minutes = (long) timeInMinutes;
+        long seconds = Math.round((timeInMinutes - minutes) * 60);
+
+        LocalTime time = LocalTime.MIDNIGHT
+                .plusMinutes(minutes)
+                .plusSeconds(seconds);
+
+       return time.toString();
+    }
 
     public String getPropertyValue(String key) throws IOException {
         Properties props = new Properties();
