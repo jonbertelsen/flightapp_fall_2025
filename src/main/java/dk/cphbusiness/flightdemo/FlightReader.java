@@ -31,8 +31,16 @@ public class FlightReader {
             e.printStackTrace();
         }
 
+        //showAllFlights();
         exercise_one();
+        exercise_two();
     }
+
+    private static void showAllFlights() {
+        System.out.println("All flights:");
+        flightInfoList.forEach(System.out::println);
+    }
+
 
     private static void exercise_one() {
         System.out.println("Exercise 1 started");
@@ -41,6 +49,16 @@ public class FlightReader {
         System.out.println(String.format("Average flight time for %s: %.2f", airline, average ));
         System.out.println("Nice formatted: " + Utils.convertDoubleInMinutesToString(average));
     }
+
+    private static void exercise_two() {
+        System.out.println("Exercise 2 started");
+        String origin = "Fukuoka";
+        String destination = "Haneda Airport";
+        List<FlightInfoDTO> flights = flightServices.getFlightRouteConnections(origin, destination, flightInfoList);
+        System.out.println(String.format("Flights operating between %s and %s. Count: %d:", origin, destination, flights.size() ));
+        flights.forEach(System.out::println);
+    }
+
 
     public static List<FlightDTO> getFlightsFromFile(String filename) throws IOException {
 

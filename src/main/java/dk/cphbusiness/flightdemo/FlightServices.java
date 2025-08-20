@@ -1,7 +1,6 @@
 package dk.cphbusiness.flightdemo;
 
 import dk.cphbusiness.flightdemo.dtos.FlightInfoDTO;
-
 import java.util.List;
 
 public class FlightServices {
@@ -17,5 +16,14 @@ public class FlightServices {
                 .orElse(0.0);
         return average;
     }
+
+    public List<FlightInfoDTO> getFlightRouteConnections(String origin, String destination, List<FlightInfoDTO> flightInfoList) {
+        List<FlightInfoDTO> flightInfoDTOs = flightInfoList.stream()
+                .filter(f -> f.getOrigin() != null && f.getDestination() != null)
+                .filter(f -> f.getOrigin().equals(origin) && f.getDestination().equals(destination))
+                .toList();
+        return flightInfoDTOs;
+    }
+
 
 }
