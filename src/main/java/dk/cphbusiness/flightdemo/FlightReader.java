@@ -7,9 +7,9 @@ import dk.cphbusiness.utils.Utils;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.sql.SQLOutput;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 /**
@@ -26,18 +26,23 @@ public class FlightReader {
     public static void main(String[] args) {
         try {
             flightList = getFlightsFromFile("flights.json");
-            flightInfoList = getFlightInfoDetails(flightList);
+            flightInfoList = getFlightInfoDetails(flightList).stream().distinct().toList();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //showAllFlights();
-        exercise_one();
-        exercise_two();
+        showAllFlights();
+//        exercise_one();
+//        exercise_two();
+//        exercise_three();
+//        exercise_four();
+//        exercise_five();
+//        exercise_six();
+//        exercise_seven();
     }
 
     private static void showAllFlights() {
-        System.out.println("All flights:");
+        System.out.printf("All flights. Count: %d%n", flightInfoList.size());
         flightInfoList.forEach(System.out::println);
     }
 
@@ -46,7 +51,7 @@ public class FlightReader {
         System.out.println("Exercise 1 started");
         String airline = "Lufthansa";
         double average = flightServices.getAverageFligthTime(flightInfoList, airline);
-        System.out.println(String.format("Average flight time for %s: %.2f", airline, average ));
+        System.out.printf("Average flight time for %s: %.2f%n", airline, average);
         System.out.println("Nice formatted: " + Utils.convertDoubleInMinutesToString(average));
     }
 
@@ -55,7 +60,46 @@ public class FlightReader {
         String origin = "Fukuoka";
         String destination = "Haneda Airport";
         List<FlightInfoDTO> flights = flightServices.getFlightRouteConnections(origin, destination, flightInfoList);
-        System.out.println(String.format("Flights operating between %s and %s. Count: %d:", origin, destination, flights.size() ));
+        System.out.printf("Flights operating between %s and %s. Count: %d:%n", origin, destination, flights.size());
+        flights.forEach(System.out::println);
+    }
+
+    private static void exercise_three() {
+        System.out.println("Exercise 3 started");
+        LocalTime cutoff = LocalTime.of(0, 15, 0);
+        List<FlightInfoDTO> flights = flightServices.getFlightBefore(cutoff, flightInfoList);
+        System.out.printf("Flights before %s. Count: %d%n", cutoff, flights.size());
+        flights.forEach(System.out::println);
+
+    }
+
+    private static void exercise_four() {
+        System.out.println("Exercise 4 started");
+        Map<String, Double> averageDurations = flightServices.averageFlightTimePerAirline(flightInfoList);
+        averageDurations.forEach((airline, avg) ->
+                System.out.printf("%s: %.2f%n", airline, avg)
+        );
+    }
+
+    private static void exercise_five() {
+        System.out.println("Exercise 5 started");
+        List<FlightInfoDTO> flights = flightServices.getFlightsSortedByArrival(flightInfoList);
+        System.out.println("Flights sorted by arrival:");
+        flights.forEach(System.out::println);
+    }
+
+    private static void exercise_six() {
+        System.out.println("Exercise 6 started");
+        Map<String, Double> totalDurations = flightServices.sumTotalFlightTimePerAirline(flightInfoList);
+        totalDurations.forEach((airline, sum) ->
+                System.out.printf("%s: %s hours %n", airline, Utils.convertDoubleInMinutesToString(sum))
+        );
+    }
+
+    private static void exercise_seven() {
+        System.out.println("Exercise 7 started");
+        List<FlightInfoDTO> flights = flightServices.getFlightsSortedByArrival(flightInfoList);
+        System.out.println("Flights sorted by duration ascending:");
         flights.forEach(System.out::println);
     }
 
