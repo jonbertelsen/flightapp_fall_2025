@@ -31,14 +31,14 @@ public class FlightReader {
             e.printStackTrace();
         }
 
-        showAllFlights();
+//       showAllFlights();
 //        exercise_one();
 //        exercise_two();
 //        exercise_three();
 //        exercise_four();
 //        exercise_five();
 //        exercise_six();
-//        exercise_seven();
+        exercise_seven();
     }
 
     private static void showAllFlights() {
