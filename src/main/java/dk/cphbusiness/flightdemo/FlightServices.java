@@ -47,7 +47,7 @@ public class FlightServices {
         List<FlightInfoDTO> flights =  flightInfoList.stream()
                 .filter(f -> f.getArrival() != null)
                 .sorted(Comparator.comparing(FlightInfoDTO::getArrival))
-                .collect(Collectors.toList());
+                .toList();
         return flights;
     }
 

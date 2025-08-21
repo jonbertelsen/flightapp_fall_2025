@@ -3,6 +3,7 @@ package dk.cphbusiness.flightdemo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dk.cphbusiness.flightdemo.dtos.FlightDTO;
 import dk.cphbusiness.flightdemo.dtos.FlightInfoDTO;
+import dk.cphbusiness.utils.Demo;
 import dk.cphbusiness.utils.Utils;
 
 import java.io.IOException;
@@ -11,12 +12,14 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import lombok.*;
 
 /**
  * Purpose:
  *
  * @author: Thomas Hartmann
  */
+
 public class FlightReader {
 
     private static List<FlightDTO> flightList;
@@ -32,13 +35,13 @@ public class FlightReader {
         }
 
 //       showAllFlights();
-//        exercise_one();
-//        exercise_two();
-//        exercise_three();
-//        exercise_four();
+  //      exercise_one();
+  //      exercise_two();
+  //      exercise_three();
+        exercise_four();
 //        exercise_five();
 //        exercise_six();
-        exercise_seven();
+ //       exercise_seven();
     }
 
     private static void showAllFlights() {
@@ -61,7 +64,7 @@ public class FlightReader {
         String destination = "Haneda Airport";
         List<FlightInfoDTO> flights = flightServices.getFlightRouteConnections(origin, destination, flightInfoList);
         System.out.printf("Flights operating between %s and %s. Count: %d:%n", origin, destination, flights.size());
-        flights.forEach(System.out::println);
+        flights.forEach(f -> System.out.printf("IATA: %s Dep: %s %n", f.getAirline(), f.getDeparture() ));
     }
 
     private static void exercise_three() {
@@ -70,7 +73,6 @@ public class FlightReader {
         List<FlightInfoDTO> flights = flightServices.getFlightBefore(cutoff, flightInfoList);
         System.out.printf("Flights before %s. Count: %d%n", cutoff, flights.size());
         flights.forEach(System.out::println);
-
     }
 
     private static void exercise_four() {
